@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open When... ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fce7f3;
+            background-image: radial-gradient(#f9a8d4 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+        .cursive { font-family: 'Dancing Script', cursive; }
+        .card-paper {
+            background: #fffcf9;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 8px solid white;
+        }
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .envelope-btn:hover { transform: translateY(-5px); transition: 0.3s; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="music-player animate__animated animate__fadeInUp">
+        <div class="bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-pink-200 flex items-center gap-3">
+            <button onclick="togglePlay()" id="playBtn" class="bg-pink-500 text-white p-2 rounded-full hover:scale-110 transition">
+                <i data-lucide="play" id="playIcon" class="w-5 h-5"></i>
+            </button>
+            <div class="flex flex-col">
+                <span class="text-[10px] text-pink-400 font-bold uppercase tracking-widest">Now Playing</span>
+                <select id="songSelect" onchange="changeSong()" class="bg-transparent text-xs font-bold text-gray-700 focus:outline-none cursor-pointer">
+                    <!--<option value="blue.mp3">Blue - Yung Kai</option>-->
+                    <option value="gehraHua.mp3">Gehra Hua</option>
+                    <option value="runningUp.mp3">Running Up That Hill</option>
+                </select>
+            </div>
+            <audio id="mainAudio" loop>
+                <source id="audioSource" src="gehraHua.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+
+    <div id="screen1" class="text-center animate__animated animate__fadeIn">
+        <div class="card-paper p-8 rounded-2xl max-w-sm mx-auto">
+            <img src="first.jpeg" class="w-32 mx-auto mb-4">
+            <h1 class="text-3xl cursive text-pink-600 mb-4">I made something for you...</h1>
+            <button onclick="nextScreen(1, 2)" class="bg-pink-500 text-white px-8 py-2 rounded-full shadow-lg hover:bg-pink-600">what?</button>
+        </div>
+    </div>
+
+    <div id="screen2" class="hidden text-center animate__animated animate__fadeIn">
+        <div class="card-paper p-8 rounded-2xl max-w-sm mx-auto">
+            <img src="second.jpeg" class="w-32 mx-auto mb-4">
+            <h1 class="text-2xl font-bold text-gray-700 mb-6">Will you see it?</h1>
+            <div class="flex justify-center gap-4">
+                <button onclick="nextScreen(2, 3)" class="bg-green-400 text-white px-8 py-2 rounded-lg shadow hover:bg-green-500">yes</button>
+                <button onmouseover="moveNo(this)" class="bg-gray-300 text-gray-600 px-8 py-2 rounded-lg transition-all">no</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen3" class="hidden text-center animate__animated animate__zoomIn">
+        <div class="card-paper p-8 rounded-2xl max-w-sm mx-auto">
+            <span class="text-pink-400 text-sm italic">YAY!</span>
+            <h1 class="text-2xl font-bold text-pink-600 mb-6">Are you ready for the surprise?</h1>
+            <img src="third.jpeg" class="w-32 mx-auto mb-4">
+            <button onclick="nextScreen(3, 4)" class="border-2 border-pink-500 text-pink-500 px-8 py-2 rounded-lg hover:bg-pink-50">yes!!</button>
+        </div>
+    </div>
+
+    <div id="screen4" class="hidden w-full max-w-2xl animate__animated animate__fadeIn">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl cursive text-pink-700">Open When...</h2>
+            <p class="text-pink-400 text-sm mt-2">Pick an envelope for your mood</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <button onclick="openLetter('You Miss Me', 'Hey love, if you\'re reading this, I\'m guessing you\'re missing me. I miss you too, probably more than you know. Close your eyes and imagine me holding your hand, annoying you, making you laugh. Distance is temporary. What we have isn\'t. I\'m always yours.', 'fourth.jpeg')" class="envelope-btn flex flex-col items-center bg-white p-6 rounded-2xl shadow-md border-b-4 border-pink-200">
+                <i data-lucide="mail" class="w-10 h-10 text-pink-500 mb-2"></i>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">you miss me</span>
+            </button>
+
+            <button onclick="openLetter('You\'re Sad', 'I wish I could be there to wipe your tears. You are so strong, and I am so proud of you. Take a deep breath. I love you more than words can say.', 'fifth.jpeg')" class="envelope-btn flex flex-col items-center bg-white p-6 rounded-2xl shadow-md border-b-4 border-pink-200">
+                <i data-lucide="frown" class="w-10 h-10 text-pink-500 mb-2"></i>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">you're sad</span>
+            </button>
+
+            <button onclick="openLetter('You\'re Happy', 'Seeing you happy is my favorite thing! Tell me everything that happened. I want to celebrate every little win with you!', 'sixth.jpeg')" class="envelope-btn flex flex-col items-center bg-white p-6 rounded-2xl shadow-md border-b-4 border-pink-200">
+                <i data-lucide="smile" class="w-10 h-10 text-pink-500 mb-2"></i>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">you're happy</span>
+            </button>
+
+            <button onclick="openLetter('You Need a Hug', 'Closing my eyes and sending you the biggest virtual hug ever. Feel that? That\'s me not letting go until you feel safe and loved.', 'seventh.jpeg')" class="envelope-btn flex flex-col items-center bg-white p-6 rounded-2xl shadow-md border-b-4 border-pink-200">
+                <i data-lucide="heart" class="w-10 h-10 text-pink-500 mb-2"></i>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">you need a hug</span>
+            </button>
+
+            <button onclick="openLetter('We Fight', 'I am sorry for my part in our argument. I hate it when we aren\'t okay. You are my person, and I never want to lose you over something small.', 'eighth.jpeg')" class="envelope-btn flex flex-col items-center bg-white p-6 rounded-2xl shadow-md border-b-4 border-pink-200">
+                <i data-lucide="swords" class="w-10 h-10 text-pink-500 mb-2"></i>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">we fight</span>
+            </button>
+
+            <button onclick="openLetter('The End', 'If you\'ve made it through these letters, I hope at least one of them made you smile a little. I wrote these for the days I can\'t be right next to you. Whenever I\'m not around read one and remember you are loved deeply, constantly, and without question. Always.', 'ninth.jpeg', true)" class="envelope-btn flex flex-col items-center bg-white p-6 rounded-2xl shadow-md border-b-4 border-pink-200">
+                <i data-lucide="stars" class="w-10 h-10 text-pink-500 mb-2"></i>
+                <span class="text-[10px] font-bold text-gray-500 uppercase">Read Last</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="screen5" class="hidden text-center animate__animated animate__fadeInUp">
+        <div class="card-paper p-6 rounded-2xl max-w-md mx-auto">
+            <img id="letterImg" src="" class="w-full h-56 object-cover rounded-xl mb-4 shadow-md">
+            <h2 id="letterTitle" class="text-2xl font-bold text-pink-600 mb-4 cursive"></h2>
+            <p id="letterContent" class="text-gray-700 leading-relaxed italic mb-8 px-2"></p>
+            
+            <div id="backNav">
+                <button onclick="nextScreen(5, 4)" class="text-pink-500 font-bold hover:underline">← Back to Envelopes</button>
+            </div>
+            <div id="restartNav" class="hidden">
+                <button onclick="location.reload()" class="bg-pink-500 text-white px-8 py-2 rounded-full shadow-lg hover:bg-pink-600 transition">Go to Start ❤️</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const audio = document.getElementById('mainAudio');
+        const playIcon = document.getElementById('playIcon');
+
+        function nextScreen(hideId, showId) {
+            document.getElementById('screen' + hideId).classList.add('hidden');
+            document.getElementById('screen' + showId).classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+
+        function openLetter(title, content, imgUrl, isFinal = false) {
+            document.getElementById('letterTitle').innerText = title;
+            document.getElementById('letterContent').innerText = content;
+            document.getElementById('letterImg').src = imgUrl;
+
+            if (isFinal) {
+                document.getElementById('backNav').classList.add('hidden');
+                document.getElementById('restartNav').classList.remove('hidden');
+            } else {
+                document.getElementById('backNav').classList.remove('hidden');
+                document.getElementById('restartNav').classList.add('hidden');
+            }
+            nextScreen(4, 5);
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.setAttribute('data-lucide', 'pause');
+            } else {
+                audio.pause();
+                playIcon.setAttribute('data-lucide', 'play');
+            }
+            lucide.createIcons();
+        }
+
+        function changeSong() {
+            const select = document.getElementById('songSelect');
+            audio.src = select.value;
+            audio.play();
+            playIcon.setAttribute('data-lucide', 'pause');
+            lucide.createIcons();
+        }
+
+        function moveNo(btn) {
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+    </script>
+</body>
+</html>
